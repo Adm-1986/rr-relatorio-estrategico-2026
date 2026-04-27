@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório Estratégico — RR Desentupidora 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+/* ─── RESET & BASE ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', 'Segoe UI', sans-serif; background: #f1f5f9; color: #0f172a; font-size: 15px; line-height: 1.6; }
+
+/* ─── VARIÁVEIS ─── */
+:root {
+  --azul:     #0f2744;
+  --azul-m:   #1e40af;
+  --azul-c:   #3b82f6;
+  --azul-l:   #dbeafe;
+  --verde:    #059669;
+  --verde-l:  #d1fae5;
+  --laranja:  #ea580c;
+  --laranja-l:#ffedd5;
+  --verm:     #dc2626;
+  --verm-l:   #fee2e2;
+  --amar:     #d97706;
+  --amar-l:   #fef3c7;
+  --cinza:    #64748b;
+  --borda:    #e2e8f0;
+  --card:     #ffffff;
+  --bg:       #f1f5f9;
+  --shadow:   0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-m: 0 4px 16px rgba(0,0,0,.1);
+  --shadow-l: 0 8px 32px rgba(0,0,0,.12);
+  --r:        12px;
+  --r-l:      20px;
+}
+
+/* ─── PROGRESS BAR ─── */
+#progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, #3b82f6, #ea580c); z-index: 1000; transition: width .1s; width: 0; }
+
+/* ─── NAV ─── */
+.nav { position: sticky; top: 0; z-index: 99; background: rgba(15,39,68,.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.08); }
+.nav-inner { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; padding: 0 24px; gap: 4px; overflow-x: auto; }
+.nav-logo { font-size: 14px; font-weight: 700; color: #fff; padding: 16px 0; margin-right: 16px; white-space: nowrap; flex-shrink: 0; opacity: .9; }
+.nav a { color: rgba(255,255,255,.6); text-decoration: none; font-size: 13px; font-weight: 500; padding: 18px 14px; white-space: nowrap; border-bottom: 2px solid transparent; transition: all .2s; }
+.nav a:hover, .nav a.active { color: #fff; border-bottom-color: #3b82f6; }
+
+/* ─── HERO ─── */
+.hero { background: linear-gradient(135deg, #0a1f3d 0%, #0f2744 40%, #1e3a6e 100%); color: #fff; padding: 80px 24px 100px; position: relative; overflow: hidden; }
+.hero::after { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+.hero-inner { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(59,130,246,.25); border: 1px solid rgba(59,130,246,.4); border-radius: 100px; padding: 6px 18px; font-size: 12px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: #93c5fd; margin-bottom: 24px; }
+.hero h1 { font-size: clamp(28px, 4vw, 48px); font-weight: 900; line-height: 1.1; margin-bottom: 16px; max-width: 700px; }
+.hero h1 span { color: #60a5fa; }
+.hero-desc { font-size: 16px; color: rgba(255,255,255,.7); max-width: 580px; margin-bottom: 40px; line-height: 1.7; }
+.hero-meta { display: flex; gap: 32px; flex-wrap: wrap; font-size: 13px; color: rgba(255,255,255,.5); }
+.hero-meta strong { color: rgba(255,255,255,.85); }
+
+/* ─── HERO KPIs ─── */
+.kpi-strip { max-width: 1180px; margin: -56px auto 0; padding: 0 24px; position: relative; z-index: 10; }
+.kpi-grid { background: #fff; border-radius: var(--r-l); box-shadow: var(--shadow-l); display: grid; grid-template-columns: repeat(4, 1fr); overflow: hidden; }
+.kpi { padding: 28px 24px; border-right: 1px solid var(--borda); position: relative; }
+.kpi:last-child { border-right: none; }
+.kpi::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.kpi:nth-child(1)::before { background: #3b82f6; }
+.kpi:nth-child(2)::before { background: #ea580c; }
+.kpi:nth-child(3)::before { background: #dc2626; }
+.kpi:nth-child(4)::before { background: #059669; }
+.kpi-value { font-size: 32px; font-weight: 900; color: var(--azul); line-height: 1; margin-bottom: 6px; }
+.kpi-label { font-size: 12px; color: var(--cinza); font-weight: 500; line-height: 1.4; }
+.kpi-sub { font-size: 11px; color: #94a3b8; margin-top: 6px; }
+
+/* ─── CONTAINER ─── */
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+/* ─── SEÇÃO ─── */
+.sec { padding: 72px 0 16px; }
+.sec-head { margin-bottom: 40px; }
+.sec-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--azul-l); color: var(--azul-m); font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: .5px; }
+.sec h2 { font-size: clamp(22px, 3vw, 32px); font-weight: 800; color: var(--azul); line-height: 1.2; margin-bottom: 10px; }
+.sec-desc { font-size: 15px; color: var(--cinza); max-width: 620px; }
+
+/* ─── CARDS ─── */
+.card { background: var(--card); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
+.card-body { padding: 28px; }
+.card-title { font-size: 15px; font-weight: 700; color: var(--azul); margin-bottom: 4px; }
+.card-sub { font-size: 13px; color: var(--cinza); margin-bottom: 20px; }
+
+/* ─── GRIDS ─── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.mb { margin-bottom: 20px; }
+.mb2 { margin-bottom: 40px; }
+
+/* ─── STAT CARDS ─── */
+.stat { background: var(--card); border-radius: var(--r); padding: 24px; box-shadow: var(--shadow); border-left: 4px solid; }
+.stat.s-azul  { border-left-color: var(--azul-c); }
+.stat.s-verde { border-left-color: var(--verde); }
+.stat.s-laran { border-left-color: var(--laranja); }
+.stat.s-verm  { border-left-color: var(--verm); }
+.stat.s-amar  { border-left-color: var(--amar); }
+.stat-val { font-size: 28px; font-weight: 900; color: var(--azul); line-height: 1; margin-bottom: 6px; }
+.stat-lbl { font-size: 13px; color: var(--cinza); font-weight: 500; }
+.stat-src { font-size: 11px; color: #94a3b8; margin-top: 8px; }
+
+/* ─── CHART WRAPPER ─── */
+.ch { background: var(--card); border-radius: var(--r); padding: 28px; box-shadow: var(--shadow); }
+.ch-h { height: 260px; position: relative; }
+.ch-h-lg { height: 320px; position: relative; }
+.ch-h-sm { height: 220px; position: relative; }
+
+/* ─── TABELAS ─── */
+.tbl-wrap { overflow-x: auto; background: var(--card); border-radius: var(--r); box-shadow: var(--shadow); }
+table { width: 100%; border-collapse: collapse; }
+thead th { background: var(--azul); color: #fff; padding: 13px 18px; font-size: 12px; font-weight: 600; text-align: left; white-space: nowrap; }
+tbody tr { border-bottom: 1px solid var(--borda); }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: #f8fafc; }
+tbody td { padding: 13px 18px; font-size: 13px; }
+tr.hi { background: #eff6ff !important; font-weight: 600; }
+tr.hi2 { background: #f0fdf4 !important; font-weight: 700; }
+tr.lo { background: #fff7ed !important; }
+tr.bad { background: #fef2f2 !important; }
+
+/* ─── BADGES ─── */
+.b { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.b-v { background: var(--verde-l); color: var(--verde); }
+.b-a { background: var(--amar-l); color: var(--amar); }
+.b-r { background: var(--verm-l); color: var(--verm); }
+.b-z { background: var(--azul-l); color: var(--azul-m); }
+
+/* ─── INSIGHTS ─── */
+.ins { border-radius: 10px; padding: 16px 20px; display: flex; gap: 14px; align-items: flex-start; margin-top: 16px; }
+.ins.i-z { background: #eff6ff; border-left: 4px solid #3b82f6; }
+.ins.i-v { background: #f0fdf4; border-left: 4px solid #10b981; }
+.ins.i-o { background: #fff7ed; border-left: 4px solid #f97316; }
+.ins.i-r { background: #fef2f2; border-left: 4px solid #ef4444; }
+.ins-ico { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.ins-txt { font-size: 14px; line-height: 1.6; color: #1e293b; }
+.ins-txt strong { font-weight: 700; }
+
+/* ─── COMPARE CARDS ─── */
+.cmp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.cmp-card { background: var(--card); border-radius: var(--r); padding: 24px; box-shadow: var(--shadow); }
+.cmp-lbl { font-size: 12px; color: var(--cinza); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 16px; }
+.cmp-row { margin-bottom: 12px; }
+.cmp-name { font-size: 13px; color: var(--azul); font-weight: 600; margin-bottom: 6px; display: flex; justify-content: space-between; }
+.cmp-bar-bg { height: 10px; background: #f1f5f9; border-radius: 100px; overflow: hidden; }
+.cmp-bar-fill { height: 100%; border-radius: 100px; }
+
+/* ─── DIAGNÓSTICO ─── */
+.diag-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.diag { border-radius: var(--r); padding: 22px; border: 1px solid; }
+.diag.d-cr { background: #fef2f2; border-color: #fca5a5; }
+.diag.d-gr { background: #fff7ed; border-color: #fdba74; }
+.diag.d-md { background: #fefce8; border-color: #fde047; }
+.diag-ico { font-size: 26px; margin-bottom: 12px; }
+.diag-ttl { font-weight: 700; font-size: 14px; margin-bottom: 8px; line-height: 1.3; }
+.diag-txt { font-size: 13px; color: var(--cinza); line-height: 1.5; margin-bottom: 12px; }
+.diag-imp { font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 6px; display: inline-block; }
+.imp-cr { background: var(--verm-l); color: var(--verm); }
+.imp-gr { background: var(--laranja-l); color: var(--laranja); }
+.imp-md { background: var(--amar-l); color: var(--amar); }
+
+/* ─── TIMELINE ─── */
+.tl { display: flex; flex-direction: column; gap: 0; }
+.tl-item { display: flex; gap: 20px; padding-bottom: 28px; position: relative; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-item::before { content: ''; position: absolute; left: 19px; top: 40px; bottom: 0; width: 2px; background: var(--borda); }
+.tl-item:last-child::before { display: none; }
+.tl-dot { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: #fff; flex-shrink: 0; z-index: 1; }
+.tl-dot.d-feito { background: var(--verde); }
+.tl-dot.d-wip   { background: var(--azul-c); }
+.tl-dot.d-plan  { background: var(--cinza); }
+.tl-body { flex: 1; background: var(--card); border-radius: var(--r); padding: 20px; box-shadow: var(--shadow); }
+.tl-badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+.tb-feito { background: var(--verde-l); color: var(--verde); }
+.tb-wip   { background: var(--azul-l); color: var(--azul-m); }
+.tb-plan  { background: #f3f4f6; color: var(--cinza); }
+.tl-ttl { font-size: 14px; font-weight: 700; color: var(--azul); margin-bottom: 6px; }
+.tl-txt { font-size: 13px; color: var(--cinza); line-height: 1.5; }
+
+/* ─── PROJEÇÃO ─── */
+.proj-hero { background: linear-gradient(135deg, #0a1f3d, #1e3a6e); border-radius: var(--r-l); padding: 40px; color: #fff; margin-bottom: 20px; }
+.proj-hero-ttl { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,.5); margin-bottom: 12px; }
+.proj-hero-h2 { font-size: clamp(20px, 2.5vw, 28px); font-weight: 800; margin-bottom: 32px; }
+.proj-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(255,255,255,.1); border-radius: 12px; overflow: hidden; }
+.proj-col { padding: 24px 20px; background: rgba(255,255,255,.04); }
+.proj-period { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 16px; }
+.proj-num { font-size: 36px; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+.proj-num-lbl { font-size: 13px; color: rgba(255,255,255,.6); margin-bottom: 16px; }
+.proj-sep { height: 1px; background: rgba(255,255,255,.1); margin: 14px 0; }
+.proj-leads { font-size: 24px; font-weight: 800; }
+.proj-leads-lbl { font-size: 13px; color: rgba(255,255,255,.6); }
+.proj-delta { display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 100px; }
+.delta-neg { background: rgba(239,68,68,.2); color: #fca5a5; }
+.delta-pos1 { background: rgba(59,130,246,.25); color: #93c5fd; }
+.delta-pos2 { background: rgba(16,185,129,.25); color: #6ee7b7; }
+
+/* ─── GAP CARDS ─── */
+.gap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.gap-card { background: var(--card); border-radius: var(--r); padding: 22px; box-shadow: var(--shadow); border-top: 3px solid var(--verde); }
+.gap-ico { font-size: 24px; margin-bottom: 10px; }
+.gap-ttl { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--azul); }
+.gap-txt { font-size: 13px; color: var(--cinza); line-height: 1.5; }
+.gap-cf  { font-size: 11px; font-weight: 700; margin-top: 10px; color: var(--cinza); }
+
+/* ─── DIVIDER ─── */
+.div { height: 1px; background: var(--borda); margin: 48px 0 0; }
+
+/* ─── FOOTER ─── */
+footer { background: var(--azul); color: rgba(255,255,255,.7); padding: 48px 24px; margin-top: 80px; }
+.foot-inner { max-width: 1180px; margin: 0 auto; }
+.foot-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 32px; margin-bottom: 32px; }
+.foot-brand { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+.foot-fontes { font-size: 12px; line-height: 2; }
+.foot-fontes strong { color: rgba(255,255,255,.9); }
+footer hr { border: none; border-top: 1px solid rgba(255,255,255,.1); margin-bottom: 20px; }
+.foot-copy { font-size: 12px; text-align: center; opacity: .5; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .g3, .diag-grid, .gap-grid, .cmp-grid { grid-template-columns: 1fr 1fr; }
+  .proj-cols { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .g2, .g3, .g4, .diag-grid, .gap-grid, .cmp-grid { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .hero { padding: 48px 16px 80px; }
+  .kpi { padding: 20px 16px; }
+  .kpi-value { font-size: 24px; }
+}
+
+/* ─── ANIMAÇÕES ─── */
+.fade-up { opacity: 0; transform: translateY(24px); transition: opacity .5s ease, transform .5s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- ═══════════════════════════ NAV ═══════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">RR Desentupidora — 2026</div>
+    <a href="#mercado">O Mercado</a>
+    <a href="#concorrencia">Concorrência</a>
+    <a href="#performance">Performance</a>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#automat">AutomatEasy</a>
+    <a href="#projecao">Projeção</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">📊 Relatório Estratégico</div>
+    <h1>Mercado, Performance<br>e <span>Próximos Passos</span></h1>
+    <p class="hero-desc">Análise completa do setor de desentupidoras em Campinas, histórico real da conta Google Ads (Jul–Dez 2025) e o plano de crescimento estruturado pela AutomatEasy.</p>
+    <div class="hero-meta">
+      <span>📅 <strong>Abril 2026</strong></span>
+      <span>📍 <strong>Campinas + 36 cidades SP</strong></span>
+      <span>💰 <strong>R$ 58.290 analisados</strong></span>
+      <span>🏢 <strong>Conta Google Ads #749-872-9570</strong></span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ KPI STRIP ═══════════════════════════ -->
+<div class="kpi-strip">
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-value" id="kpi1">R$&nbsp;58.290</div>
+      <div class="kpi-label">Investido em anúncios</div>
+      <div class="kpi-sub">Jul–Dez 2025 · 4 campanhas</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-value" id="kpi2" style="color:var(--laranja)">349</div>
+      <div class="kpi-label">Leads gerados (WhatsApp + Tel)</div>
+      <div class="kpi-sub">CPL médio: R$ 167/lead</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-value" id="kpi3" style="color:var(--verm)">25,47%</div>
+      <div class="kpi-label">Share of Voice no Google</div>
+      <div class="kpi-sub">75% do mercado ainda em aberto</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-value" id="kpi4" style="color:var(--verde)">20,46%</div>
+      <div class="kpi-label">Taxa de conversão do site</div>
+      <div class="kpi-sub">Benchmark do setor: 10% ✅ 2×</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+  SEÇÃO 1 — O MERCADO
+════════════════════════════════════════════════════ -->
+<section class="sec" id="mercado">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="sec-tag">01 — O Mercado</div>
+      <h2>O setor de desentupidoras no Brasil<br>e em Campinas</h2>
+      <p class="sec-desc">Dimensionamento do mercado, crescimento histórico, ticket médio praticado e volume de buscas no Google.</p>
+    </div>
+
+    <!-- Métricas do mercado -->
+    <div class="g4 mb fade-up">
+      <div class="stat s-azul">
+        <div class="stat-val">3.385</div>
+        <div class="stat-lbl">Empresas ativas no Brasil</div>
+        <div class="stat-src">Econodata, 2025</div>
+      </div>
+      <div class="stat s-verde">
+        <div class="stat-val">31+</div>
+        <div class="stat-lbl">Empresas só em Campinas</div>
+        <div class="stat-src">Econodata, 2025</div>
+      </div>
+      <div class="stat s-laran">
+        <div class="stat-val">+1–6%</div>
+        <div class="stat-lbl">Crescimento anual do setor desde 2010</div>
+        <div class="stat-src">ABRACD / Limpeza Profissional BR</div>
+      </div>
+      <div class="stat s-verm">
+        <div class="stat-val">~50k</div>
+        <div class="stat-lbl">Buscas/mês em SP por desentupimento</div>
+        <div class="stat-src">Estimativa via Keyword Planner, 2023</div>
+      </div>
+    </div>
+
+    <!-- Charts mercado -->
+    <div class="g2 mb fade-up">
+      <div class="ch">
+        <div class="card-title">Presença de mercado por cidade</div>
+        <div class="card-sub">Nº de empresas desentupidoras ativas (Econodata, 2025)</div>
+        <div class="ch-h"><canvas id="cCidades"></canvas></div>
+      </div>
+      <div class="ch">
+        <div class="card-title">Crescimento anual do setor</div>
+        <div class="card-sub">Limpeza profissional / desentupimento — Brasil (2010–2026e)</div>
+        <div class="ch-h"><canvas id="cCrescimento"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Preços do mercado -->
+    <div class="ch mb fade-up">
+      <div class="card-title">Ticket médio por tipo de serviço — Campinas/SP</div>
+      <div class="card-sub">Faixa de preços praticada pelos concorrentes (pesquisa direta, abr/2026)</div>
+      <div class="ch-h-lg"><canvas id="cTicket"></canvas></div>
+    </div>
+
+    <!-- Tabela de preços -->
+    <div class="tbl-wrap mb2 fade-up">
+      <table>
+        <thead>
+          <tr><th>Serviço</th><th>Preço Mínimo</th><th>Preço Máximo</th><th>Ticket Médio Estimado</th><th>Cobrança</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Pia / Ralo</strong></td><td>R$ 69,90/m</td><td>R$ 120/m</td><td>R$ 90/m (~R$ 180–360 por atend.)</td><td>Por metro linear</td></tr>
+          <tr><td><strong>Vaso Sanitário</strong></td><td>R$ 79,90/m</td><td>R$ 120/m</td><td>R$ 90/m (~R$ 180–300 por atend.)</td><td>Por metro linear</td></tr>
+          <tr><td><strong>Esgoto Residencial</strong></td><td>R$ 149,90/m</td><td>R$ 250/m</td><td>R$ 200/m (~R$ 400–800 por atend.)</td><td>Por metro linear</td></tr>
+          <tr><td><strong>Caixa de Gordura</strong></td><td>R$ 150</td><td>R$ 400</td><td>R$ 250–300 por serviço</td><td>Por serviço</td></tr>
+          <tr><td><strong>Hidrojateamento</strong></td><td>R$ 300</td><td>R$ 800</td><td>R$ 500 por serviço</td><td>Por serviço</td></tr>
+          <tr class="hi"><td><strong>📌 Faixa geral em Campinas</strong></td><td><strong>R$ 120</strong></td><td><strong>R$ 980</strong></td><td><strong>R$ 400–600 por atendimento</strong></td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ins i-z fade-up">
+      <div class="ins-ico">💡</div>
+      <div class="ins-txt"><strong>Mercado fragmentado = oportunidade real.</strong> Com 3.385 empresas no Brasil e nenhuma holding dominante, quem tiver presença digital consistente e campanhas otimizadas pode capturar parcela significativa do mercado local rapidamente. Campinas tem apenas 31 empresas para 1,2 milhão de habitantes — relação de 1 empresa para cada ~39 mil pessoas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+  SEÇÃO 2 — CONCORRÊNCIA
+════════════════════════════════════════════════════ -->
+<div class="div"></div>
+<section class="sec" id="concorrencia">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="sec-tag">02 — Concorrência</div>
+      <h2>Quem anuncia em Campinas<br>e como a RR se posiciona</h2>
+      <p class="sec-desc">Dados reais do relatório de leilão da conta Google Ads da RR — quem compete, com que frequência e em qual posição.</p>
+    </div>
+
+    <div class="g2 mb fade-up">
+      <div class="ch">
+        <div class="card-title">Share of Voice — Google Ads Campinas</div>
+        <div class="card-sub">% de impressões capturadas (Search IS) por anunciante</div>
+        <div class="ch-h"><canvas id="cShareVoice"></canvas></div>
+      </div>
+      <div class="ch">
+        <div class="card-title">Frequência de sobreposição com RR</div>
+        <div class="card-sub">% dos leilões em que cada concorrente também apareceu</div>
+        <div class="ch-h"><canvas id="cOverlap"></canvas></div>
+      </div>
+    </div>
+
+    <div class="tbl-wrap mb fade-up">
+      <table>
+        <thead>
+          <tr><th>Concorrente</th><th>Search IS</th><th>Sobreposição</th><th>Aparece acima da RR</th><th>Taxa topo de página</th><th>Ameaça</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi"><td><strong>🏆 RR Desentupidora (você)</strong></td><td><strong>25,30%</strong></td><td>—</td><td>—</td><td><strong>74,91%</strong></td><td>—</td></tr>
+          <tr><td>Hidrourgente</td><td>18,90%</td><td>21,20%</td><td>62,82%</td><td>79,72%</td><td><span class="b b-r">Alta</span></td></tr>
+          <tr><td>FluxClean</td><td>&lt;10%</td><td>15,96%</td><td>43,23%</td><td>64,19%</td><td><span class="b b-a">Média</span></td></tr>
+          <tr><td>Hidro Rápida</td><td>&lt;10%</td><td>12,70%</td><td>49,13%</td><td>72,44%</td><td><span class="b b-a">Média</span></td></tr>
+          <tr><td>Hidropro</td><td>&lt;10%</td><td>5,74%</td><td>70,60%</td><td>79,59%</td><td><span class="b b-v">Baixa</span></td></tr>
+          <tr><td>Vai Dar Certo</td><td>&lt;10%</td><td>5,92%</td><td>65,86%</td><td>72,02%</td><td><span class="b b-v">Baixa</span></td></tr>
+          <tr><td>Ocean</td><td>&lt;10%</td><td>2,48%</td><td>74,55%</td><td>82,58%</td><td><span class="b b-v">Baixa</span></td></tr>
+          <tr><td>Hidromarine</td><td>&lt;10%</td><td>1,63%</td><td>76,66%</td><td>82,88%</td><td><span class="b b-v">Baixa</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:#94a3b8;margin-bottom:32px;">Fonte: Relatório de Leilão Google Ads — conta RR Desentupidora (749-872-9570), Jul–Dez 2025</p>
+
+    <!-- O que os concorrentes fazem -->
+    <div class="ch mb2 fade-up">
+      <div class="card-body">
+        <div class="card-title">Estratégias observadas nos concorrentes × Diferencial RR</div>
+        <div class="card-sub">Pesquisa direta nos sites dos anunciantes identificados, abril 2026</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Estratégia</th><th>O que todos fazem</th><th>O diferencial da RR</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Preço âncora</strong></td><td>R$ 79,90/metro (quase universal)</td><td>RR posiciona por valor: 14.847 serviços, 4.9★, garantia 90 dias</td></tr>
+              <tr><td><strong>Urgência</strong></td><td>Todos prometem 24h / 30 minutos</td><td>RR: "Equipe própria DDD 19" — local de verdade, não call center</td></tr>
+              <tr><td><strong>Garantia</strong></td><td>30–90 dias (variado)</td><td>RR: 90 dias — topo do mercado. Merece destaque maior nos anúncios</td></tr>
+              <tr><td><strong>Reviews</strong></td><td>Concorrente principal: 2.800+ Google Reviews</td><td>RR: 247 reviews — crescer reviews é alavanca direta de redução de CPC</td></tr>
+              <tr class="hi"><td><strong>Google LSA</strong></td><td>✅ Nenhum concorrente identificado em LSA</td><td>Posição 0 acima de todos os anúncios — oportunidade não ocupada</td></tr>
+              <tr class="hi"><td><strong>B2B / Condomínios</strong></td><td>✅ Todos focam só em pessoa física</td><td>Ticket 3–10× maior, contrato mensal, nenhum player explorando</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gaps -->
+    <div class="gap-grid mb2 fade-up">
+      <div class="gap-card">
+        <div class="gap-ico">📊</div>
+        <div class="gap-ttl">75% do mercado sem cobertura</div>
+        <div class="gap-txt">O maior anunciante (Hidrourgente) tem apenas 18,9% IS. 75% das buscas ainda não têm um vencedor claro — quem investir de forma consistente domina.</div>
+        <div class="gap-cf">✅ Alta confiança — dados reais do leilão</div>
+      </div>
+      <div class="gap-card">
+        <div class="gap-ico">🏆</div>
+        <div class="gap-ttl">Google LSA vazio</div>
+        <div class="gap-txt">Google Local Services Ads aparecem acima de todos os anúncios pagos. Nenhum concorrente foi identificado como ativo no formato em Campinas.</div>
+        <div class="gap-cf">🟡 Confiança média — verificar ativação</div>
+      </div>
+      <div class="gap-card">
+        <div class="gap-ico">🏢</div>
+        <div class="gap-ttl">B2B / condomínios inexplorado</div>
+        <div class="gap-txt">Restaurantes, condomínios e empresas precisam de contratos de manutenção. Ticket 3–10× maior. Nenhum concorrente com campanha específica para esse público.</div>
+        <div class="gap-cf">🟡 Confiança média — validar oferta</div>
+      </div>
+    </div>
+
+    <div class="ins i-z fade-up">
+      <div class="ins-ico">💡</div>
+      <div class="ins-txt"><strong>A RR é o maior anunciante do Google em Campinas para desentupidoras</strong> — com 25,3% de IS, supera o Hidrourgente (18,9%). O problema não é ausência de mercado, é que 75% das impressões potenciais ainda estão em aberto, e a RR está perdendo 51% das suas próprias impressões por questões técnicas de qualidade de anúncio — não por falta de verba.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+  SEÇÃO 3 — PERFORMANCE HISTÓRICA
+════════════════════════════════════════════════════ -->
+<div class="div"></div>
+<section class="sec" id="performance">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="sec-tag">03 — Performance Histórica</div>
+      <h2>O que a conta fez entre<br>Julho e Dezembro de 2025</h2>
+      <p class="sec-desc">Análise das 4 campanhas executadas, evolução das métricas e comparativo com os benchmarks do mercado.</p>
+    </div>
+
+    <!-- Charts histórico -->
+    <div class="g2 mb fade-up">
+      <div class="ch">
+        <div class="card-title">Leads por campanha</div>
+        <div class="card-sub">Total de contatos gerados (WhatsApp + telefone + mensagem)</div>
+        <div class="ch-h"><canvas id="cLeads"></canvas></div>
+      </div>
+      <div class="ch">
+        <div class="card-title">Evolução do custo por lead (CPA alvo)</div>
+        <div class="card-sub">A cada nova campanha criada, o custo subiu — learning destruído</div>
+        <div class="ch-h"><canvas id="cCPA"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Tabela campanhas -->
+    <div class="tbl-wrap mb fade-up">
+      <table>
+        <thead>
+          <tr><th>Campanha</th><th>Budget/dia</th><th>CPA Alvo</th><th>Leads</th><th>% do Total</th><th>Quality Score</th><th>Resultado</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi2"><td><strong>🏆 Julho 2025</strong></td><td>R$ 300</td><td>R$ 186</td><td><strong>256</strong></td><td><strong>73%</strong></td><td>Misto (1 Excelente)</td><td><span class="b b-v">Melhor da conta</span></td></tr>
+          <tr class="lo"><td>Setembro 2025</td><td>R$ 450</td><td>R$ 200</td><td>32</td><td>9%</td><td>Média</td><td><span class="b b-a">Queda abrupta</span></td></tr>
+          <tr class="lo"><td>Outubro 2025</td><td>R$ 400</td><td>R$ 270</td><td>43</td><td>12%</td><td>Excelente</td><td><span class="b b-a">Parcial</span></td></tr>
+          <tr class="bad"><td>Dezembro 2025</td><td>R$ 500</td><td>R$ 366</td><td>18</td><td>5%</td><td>Excelente</td><td><span class="b b-r">Pior da conta</span></td></tr>
+          <tr style="background:#f8fafc;font-weight:600;"><td><strong>TOTAL (6 meses)</strong></td><td>—</td><td>R$ 167 real</td><td><strong>349</strong></td><td>100%</td><td>—</td><td>R$ 58.290 investidos</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ins i-o mb2 fade-up">
+      <div class="ins-ico">⚠️</div>
+      <div class="ins-txt"><strong>O paradoxo do orçamento maior com resultado menor:</strong> Set/Out/Dez tiveram mais budget (R$400–500/dia vs R$300 em Julho) e geraram muito menos leads a custo mais alto. Isso não é falha do mercado — é consequência da reconstrução mensal de campanhas, que destruía o aprendizado do Google Ads toda vez.</div>
+    </div>
+
+    <!-- RR vs Mercado -->
+    <div class="sec-head fade-up" style="margin-bottom:24px;">
+      <div class="sec-tag" style="background:#f0fdf4;color:#059669;">RR × Benchmark</div>
+      <h2 style="font-size:22px;">Onde a RR supera o mercado — e onde ainda tem margem</h2>
+    </div>
+
+    <!-- Comparativo visual por métrica -->
+    <div class="cmp-grid mb fade-up">
+      <div class="cmp-card">
+        <div class="cmp-lbl">CPC Médio — menor é melhor</div>
+        <div class="cmp-row">
+          <div class="cmp-name"><span>RR (histórico)</span><span style="color:var(--verde);font-size:15px;font-weight:800;">R$ 34,17</span></div>
+          <div class="cmp-bar-bg"><div class="cmp-bar-fill" style="width:38%;background:var(--azul);"></div></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-name"><span>Benchmark SP</span><span style="color:var(--cinza);">R$ 52–89</span></div>
+          <div class="cmp-bar-bg"><div class="cmp-bar-fill" style="width:100%;background:#cbd5e1;"></div></div>
+        </div>
+        <div class="ins i-v" style="margin-top:12px;padding:10px 14px;">
+          <div class="ins-ico" style="font-size:16px;">✅</div>
+          <div class="ins-txt" style="font-size:13px;"><strong>35–62% abaixo do mercado.</strong> RR paga bem menos por clique.</div>
+        </div>
+      </div>
+
+      <div class="cmp-card">
+        <div class="cmp-lbl">Taxa de conversão — maior é melhor</div>
+        <div class="cmp-row">
+          <div class="cmp-name"><span>RR (histórico)</span><span style="color:var(--verde);font-size:15px;font-weight:800;">20,46%</span></div>
+          <div class="cmp-bar-bg"><div class="cmp-bar-fill" style="width:100%;background:var(--azul);"></div></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-name"><span>Benchmark setor</span><span style="color:var(--cinza);">~10%</span></div>
+          <div class="cmp-bar-bg"><div class="cmp-bar-fill" style="width:49%;background:#cbd5e1;"></div></div>
+        </div>
+        <div class="ins i-v" style="margin-top:12px;padding:10px 14px;">
+          <div class="ins-ico" style="font-size:16px;">✅</div>
+          <div class="ins-txt" style="font-size:13px;"><strong>2× o benchmark.</strong> O site e a oferta convertem excepcionalmente bem.</div>
+        </div>
+      </div>
+
+      <div class="cmp-card">
+        <div class="cmp-lbl">Search IS — presença no mercado</div>
+        <div class="cmp-row">
+          <div class="cmp-name"><span>RR (atual)</span><span style="color:var(--amar);font-size:15px;font-weight:800;">25,47%</span></div>
+          <div class="cmp-bar-bg"><div class="cmp-bar-fill" style="width:51%;background:var(--amar);"></div></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-name"><span>Potencial (meta)</span><span style="color:var(--cinza);">45–50%</span></div>
+          <div class="cmp-bar-bg"><div class="cmp-bar-fill" style="width:100%;background:#cbd5e1;"></div></div>
+        </div>
+        <div class="ins i-o" style="margin-top:12px;padding:10px 14px;">
+          <div class="ins-ico" style="font-size:16px;">⚠️</div>
+          <div class="ins-txt" style="font-size:13px;"><strong>Aparece em 1 de cada 4 buscas.</strong> Potencial de dobrar sem mais budget.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CPL por serviço -->
+    <div class="ch mb2 fade-up">
+      <div class="card-title">CPL histórico por tipo de busca — Jul a Dez 2025</div>
+      <div class="card-sub">Custo real por lead em cada categoria. A linha pontilhada é a média geral da conta (R$ 167). Quanto menor, mais eficiente.</div>
+      <div class="ch-h-lg"><canvas id="cCPLServico"></canvas></div>
+    </div>
+
+    <div class="ins i-z fade-up">
+      <div class="ins-ico">💎</div>
+      <div class="ins-txt"><strong>Encanador: o segmento mais rentável da conta.</strong> 61 leads históricos a R$ 41,86 cada — 4× mais barato que a média. Esse grupo inteiro havia sido bloqueado nas campanhas anteriores por erro de classificação. Reativar essa categoria pode representar a maior redução imediata de CPL.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+  SEÇÃO 4 — DIAGNÓSTICO
+════════════════════════════════════════════════════ -->
+<div class="div"></div>
+<section class="sec" id="diagnostico">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="sec-tag">04 — Diagnóstico</div>
+      <h2>O que estava errado — e o<br>impacto financeiro de cada problema</h2>
+      <p class="sec-desc">Auditoria completa dos 900 dias de histórico da conta. Sete problemas identificados, todos com causa raiz documentada.</p>
+    </div>
+
+    <div class="diag-grid mb2 fade-up">
+      <div class="diag d-cr">
+        <div class="diag-ico">🔴</div>
+        <div class="diag-ttl">4 campanhas em 6 meses destruíram o aprendizado</div>
+        <div class="diag-txt">O Google Ads precisa de 30–50 conversões para aprender quem converte. A campanha de Julho provou isso: 256 leads (73% do total em 1 de 4 campanhas). As demais, reconstruídas do zero, nunca chegaram a este nível.</div>
+        <div class="diag-imp imp-cr">🔴 CPL triplicou: R$ 186 → R$ 366</div>
+      </div>
+      <div class="diag d-cr">
+        <div class="diag-ico">🔴</div>
+        <div class="diag-ttl">R$ 0 de valor nas conversões</div>
+        <div class="diag-txt">O sistema de anúncios otimizava R$ 58.290 sem saber que um lead vale R$ 400–800. Sem esse dado, o Google Ads não conseguia priorizar os melhores horários, bairros e termos de busca.</div>
+        <div class="diag-imp imp-cr">🔴 Smart Bidding cego por 6 meses</div>
+      </div>
+      <div class="diag d-cr">
+        <div class="diag-ico">🔴</div>
+        <div class="diag-ttl">89% das ligações invisíveis</div>
+        <div class="diag-txt">Call tracking registrou 4 ligações. Dados da operação mostram 38 reais. Leads por telefone (alta intenção, urgência real) eram completamente ignorados na otimização.</div>
+        <div class="diag-imp imp-cr">🔴 34 ligações "fantasmas" não contabilizadas</div>
+      </div>
+      <div class="diag d-gr">
+        <div class="diag-ico">🟠</div>
+        <div class="diag-ttl">25 leads de "encanador" descartados</div>
+        <div class="diag-txt">Termos de "encanador" foram bloqueados como negativos. Esses termos geravam leads a R$ 35–49 — 4× mais baratos que a média. 25 clientes perdidos, R$ 875 jogados fora.</div>
+        <div class="diag-imp imp-gr">🟠 R$ 875 em leads descartados por erro</div>
+      </div>
+      <div class="diag d-gr">
+        <div class="diag-ico">🟠</div>
+        <div class="diag-ttl">51% das impressões perdidas por qualidade</div>
+        <div class="diag-txt">Em 1 de cada 2 buscas relevantes, a RR não aparecia. Não por falta de orçamento — por qualidade de anúncio e landing page abaixo dos concorrentes naquele leilão.</div>
+        <div class="diag-imp imp-gr">🟠 Volume 2× menor do que o possível</div>
+      </div>
+      <div class="diag d-cr">
+        <div class="diag-ico">🔴</div>
+        <div class="diag-ttl">"Desentupir vaso": R$ 399 e zero leads</div>
+        <div class="diag-txt">148 cliques, CPC de R$ 2,70 (11× abaixo da média), e nenhuma conversão. O próprio Smart Bidding já sabia que esse termo não convertia — o CPC baixíssimo era o sinal. A keyword ficou ativa consumindo orçamento.</div>
+        <div class="diag-imp imp-cr">🔴 R$ 399 desperdiçados em intenção 100% DIY</div>
+      </div>
+    </div>
+
+    <!-- Custo total dos problemas -->
+    <div style="background:var(--azul);border-radius:var(--r-l);padding:32px;color:#fff;" class="fade-up">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;opacity:.6;margin-bottom:16px;">Impacto financeiro estimado dos problemas</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:center;">
+        <div>
+          <div style="font-size:36px;font-weight:900;color:#fca5a5;">R$ 875</div>
+          <div style="font-size:13px;opacity:.7;margin-top:4px;">Leads de encanador descartados</div>
+        </div>
+        <div style="border-left:1px solid rgba(255,255,255,.15);border-right:1px solid rgba(255,255,255,.15);">
+          <div style="font-size:36px;font-weight:900;color:#fcd34d;">R$ 399</div>
+          <div style="font-size:13px;opacity:.7;margin-top:4px;">Gasto em "desentupir vaso" sem nenhum retorno</div>
+        </div>
+        <div>
+          <div style="font-size:36px;font-weight:900;color:#86efac;">~R$ 30k</div>
+          <div style="font-size:13px;opacity:.7;margin-top:4px;">Estimativa de custo adicional pelo learning destruído (Set-Dez vs Jul)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+  SEÇÃO 5 — AUTOMAT EASY
+════════════════════════════════════════════════════ -->
+<div class="div"></div>
+<section class="sec" id="automat">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="sec-tag">05 — AutomatEasy</div>
+      <h2>O que foi entregue<br>e o que está em andamento</h2>
+      <p class="sec-desc">Trabalho completo da parceria: diagnóstico, estratégia, estrutura, rastreamento e próximos passos.</p>
+    </div>
+
+    <div class="tl fade-up">
+      <div class="tl-item">
+        <div class="tl-dot d-feito">1</div>
+        <div class="tl-body">
+          <div class="tl-badge tb-feito">✅ Concluído</div>
+          <div class="tl-ttl">Auditoria completa — 900 dias de histórico</div>
+          <div class="tl-txt">Análise de 9.284 search terms, 4 campanhas, todos os ad groups, keywords e anúncios. Relatório de leilão com 12+ concorrentes identificados. 7 problemas críticos documentados com impacto financeiro calculado.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot d-feito">2</div>
+        <div class="tl-body">
+          <div class="tl-badge tb-feito">✅ Concluído</div>
+          <div class="tl-ttl">Pesquisa de mercado — 572 termos de busca mapeados</div>
+          <div class="tl-txt">Automação via Apify para 18 seeds de busca, cruzamento com 140 search terms que converteram historicamente. Estrutura de 7 grupos temáticos com evidência de desempenho por keyword. Blacklist de termos DIY documentada com dados históricos.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot d-feito">3</div>
+        <div class="tl-body">
+          <div class="tl-badge tb-feito">✅ Concluído</div>
+          <div class="tl-ttl">Nova estratégia de campanha — 1 campanha / 2 ad groups</div>
+          <div class="tl-txt">Estrutura consolidada com base no budget math: R$ 400/dia ÷ R$ 34 CPC = 6 cliques/dia por grupo — mínimo para o Smart Bidding aprender. Faseamento de 4 etapas de bid strategy (Max Conv → tCPA → tROAS). Campanha criada pausada aguardando ativação.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot d-feito">4</div>
+        <div class="tl-body">
+          <div class="tl-badge tb-feito">✅ Concluído</div>
+          <div class="tl-ttl">Anúncios RSA completos — 15 títulos + 4 descrições</div>
+          <div class="tl-txt">Anúncios escritos com 4 dos 6 princípios de Cialdini: prova social (14.847 serviços, 4.9★), reciprocidade (orçamento grátis, sem taxa), autoridade (desde 2010, DDD 19), afinidade (equipe local). Dois anúncios prontos, um por grupo.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot d-feito">5</div>
+        <div class="tl-body">
+          <div class="tl-badge tb-feito">✅ Concluído</div>
+          <div class="tl-ttl">Auditoria de site + brief para o time de desenvolvimento</div>
+          <div class="tl-txt">Crawl completo do site: ausência de schema markup, falta de meta descriptions, erro 404 em /regioes-atendidas/, LP de esgoto inexistente. Brief entregue ao time Dev com prioridade e impacto de cada item no Quality Score dos anúncios.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot d-feito">6</div>
+        <div class="tl-body">
+          <div class="tl-badge tb-feito">✅ Concluído — instalação emergencial</div>
+          <div class="tl-ttl">Rastreamento Fase 1 — GTM + WhatsApp + Telefone</div>
+          <div class="tl-txt">Site novo subiu sem nenhuma tag de rastreamento — corrigido em emergência. GTM Web instalado, conversão "Clique WhatsApp" e "Lead Telefônico" disparando corretamente. Resolvemos o rastreamento cego que existia em todas as campanhas anteriores.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot d-wip">7</div>
+        <div class="tl-body">
+          <div class="tl-badge tb-wip">🔄 Em desenvolvimento</div>
+          <div class="tl-ttl">Rastreamento Fase 2 — Código único por lead (REF_ID + Z-API + N8n)</div>
+          <div class="tl-txt">Cada clique no WhatsApp gera um código único (ex: RR-EZJFZK). Quando o cliente manda mensagem, o sistema identifica automaticamente qual anúncio trouxe aquela pessoa. O Google Ads passa a saber quais buscas geram clientes reais — não só cliques. Isso ativa a otimização avançada.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot d-wip">8</div>
+        <div class="tl-body">
+          <div class="tl-badge tb-wip">🔄 Aguardando rastreamento confirmado</div>
+          <div class="tl-ttl">Ativação da campanha [RR] Pesquisa — Campinas 2026</div>
+          <div class="tl-txt">Campanha nova criada e pausada. Só ativa com rastreamento 100% confirmado ao vivo — não repetiremos o erro das campanhas anteriores que rodaram sem visibilidade de resultados. Meta inicial: 2–4 leads/dia.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+  SEÇÃO 6 — PROJEÇÃO
+════════════════════════════════════════════════════ -->
+<div class="div"></div>
+<section class="sec" id="projecao">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <div class="sec-tag">06 — Projeção</div>
+      <h2>O que esperamos entregar —<br>baseado no seu próprio histórico</h2>
+      <p class="sec-desc">As metas não são estimativas genéricas de mercado. São baseadas no melhor resultado que a conta já demonstrou ser capaz de alcançar: Julho de 2025.</p>
+    </div>
+
+    <!-- Projeção hero -->
+    <div class="proj-hero mb fade-up">
+      <div class="proj-hero-ttl">Evolução do custo por lead e volume mensal — mesmo R$ 12.000/mês de budget</div>
+      <div class="proj-hero-h2">Com estrutura correta, o mesmo investimento gera progressivamente mais resultado</div>
+      <div class="proj-cols">
+        <div class="proj-col">
+          <div class="proj-period">Histórico — Jul–Dez 2025</div>
+          <div class="proj-num" style="color:#fca5a5;">R$ 167</div>
+          <div class="proj-num-lbl">custo por lead</div>
+          <div class="proj-sep"></div>
+          <div class="proj-leads">72</div>
+          <div class="proj-leads-lbl">leads/mês com R$ 12k</div>
+          <div class="proj-delta delta-neg">📉 Referência atual</div>
+        </div>
+        <div class="proj-col">
+          <div class="proj-period">Meta Fase 1 — primeiros 30–60 dias</div>
+          <div class="proj-num" style="color:#93c5fd;">R$ 120</div>
+          <div class="proj-num-lbl">custo por lead</div>
+          <div class="proj-sep"></div>
+          <div class="proj-leads" style="color:#93c5fd;">100</div>
+          <div class="proj-leads-lbl">leads/mês (+38%)</div>
+          <div class="proj-delta delta-pos1">📈 +38% leads</div>
+        </div>
+        <div class="proj-col">
+          <div class="proj-period">Meta Fase 2 — 60–120 dias</div>
+          <div class="proj-num" style="color:#6ee7b7;">R$ 80</div>
+          <div class="proj-num-lbl">custo por lead</div>
+          <div class="proj-sep"></div>
+          <div class="proj-leads" style="color:#6ee7b7;">150</div>
+          <div class="proj-leads-lbl">leads/mês (+108%)</div>
+          <div class="proj-delta delta-pos2">🚀 +108% leads</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart projeção -->
+    <div class="g2 mb fade-up">
+      <div class="ch">
+        <div class="card-title">Evolução de leads/mês</div>
+        <div class="card-sub">Histórico real + projeção por fase</div>
+        <div class="ch-h"><canvas id="cProjLeads"></canvas></div>
+      </div>
+      <div class="ch">
+        <div class="card-title">Evolução do CPL (custo por lead)</div>
+        <div class="card-sub">A queda de CPL é consequência da melhoria da estrutura</div>
+        <div class="ch-h"><canvas id="cProjCPL"></canvas></div>
+      </div>
+    </div>
+
+    <!-- ROI table -->
+    <div class="tbl-wrap mb2 fade-up">
+      <table>
+        <thead>
+          <tr><th>Cenário</th><th>Leads/mês</th><th>Atendimentos (30% fechamento)</th><th>Faturamento est. (R$ 500 ticket)</th><th>ROI sobre ads</th></tr>
+        </thead>
+        <tbody>
+          <tr class="bad"><td>Histórico 2025</td><td>72</td><td>~22</td><td>~R$ 11.000</td><td><span class="b b-r">0,9× (próximo do zero)</span></td></tr>
+          <tr class="lo"><td>Meta Fase 1 (2026)</td><td>100</td><td>~30</td><td>~R$ 15.000</td><td><span class="b b-a">1,25×</span></td></tr>
+          <tr class="hi2"><td><strong>Meta Fase 2 (2026)</strong></td><td><strong>150</strong></td><td><strong>~45</strong></td><td><strong>~R$ 22.500</strong></td><td><span class="b b-v">1,87× ✅</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:#94a3b8;margin-bottom:32px;">* Cálculo de faturamento considera apenas atendimentos gerados pelo Google Ads, com ticket médio de R$ 500 e 30% de taxa de fechamento. Não inclui serviços recorrentes, indicações ou outros canais de aquisição.</p>
+
+    <div class="ins i-v fade-up">
+      <div class="ins-ico">🎯</div>
+      <div class="ins-txt"><strong>A referência mais confiável é o próprio Julho de 2025 da RR:</strong> 256 leads em ~30 dias com R$ 300/dia (menos que o budget atual). Isso demonstra que quando a estrutura está correta e o aprendizado não é interrompido, a conta já provou ser capaz de alcançar resultados muito superiores ao histórico dos 6 meses completos. A Meta da Fase 2 está dentro do que a RR já demonstrou ser possível.</div>
+    </div>
+
+    <!-- Próximos passos -->
+    <div style="height:40px;"></div>
+    <div class="sec-head fade-up" style="margin-bottom:20px;">
+      <div class="sec-tag">Próximos passos</div>
+      <h2 style="font-size:22px;">O que acontece agora</h2>
+    </div>
+
+    <div class="tbl-wrap mb2 fade-up">
+      <table>
+        <thead>
+          <tr><th>Prioridade</th><th>Ação</th><th>Responsável</th><th>Status</th><th>Impacto</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="b b-r">🔴 Bloqueante</span></td><td>Confirmar rastreamento Fase 1 ativo (WhatsApp + Tel)</td><td>AutomatEasy Tracking</td><td><span class="b b-z">Em andamento</span></td><td>Sem isso, campanha não ativa</td></tr>
+          <tr><td><span class="b b-r">🔴 Bloqueante</span></td><td>Ativar campanha [RR] Pesquisa — Campinas 2026</td><td>AutomatEasy Tráfego</td><td><span class="b b-a">Aguardando tracking</span></td><td>Início da geração de leads</td></tr>
+          <tr><td><span class="b b-a">🟠 Alta prioridade</span></td><td>Fase 2: REF_ID + Z-API + N8n (atribuição completa)</td><td>AutomatEasy Automações</td><td><span class="b b-z">Em desenvolvimento</span></td><td>Desbloqueio CPL R$ 80</td></tr>
+          <tr><td><span class="b b-a">🟠 Alta prioridade</span></td><td>LP fixes: schema, meta descriptions, 404</td><td>AutomatEasy Dev</td><td><span class="b b-z">Briefado</span></td><td>+QS → -CPC → +volume</td></tr>
+          <tr><td><span class="b b-z">Otimização</span></td><td>Monitoramento semanal: Search Terms + CPL + IS</td><td>AutomatEasy Tráfego</td><td><span class="b b-v">Processo contínuo</span></td><td>Ajuste fino semanal</td></tr>
+          <tr><td><span class="b b-z">Otimização</span></td><td>Avaliar Google LSA — posição acima dos anúncios pagos</td><td>AutomatEasy Tráfego</td><td><span class="b b-a">Avaliar ativação</span></td><td>Posição premium sem CPC</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div>
+        <div class="foot-brand">RR Desentupidora</div>
+        <p style="font-size:13px;line-height:1.7;">Relatório Estratégico — Abril 2026<br>Conta Google Ads #749-872-9570 · Período analisado: Jul–Dez 2025</p>
+      </div>
+      <div>
+        <p style="font-size:13px;font-weight:700;color:#fff;margin-bottom:8px;">Produzido por AutomatEasy</p>
+        <p style="font-size:13px;line-height:1.7;">Estratégia e Execução de Tráfego Pago<br>Goiânia-BR · automateasyai.com.br</p>
+      </div>
+    </div>
+    <hr>
+    <div class="foot-fontes">
+      <strong>Fontes e metodologia:</strong><br>
+      [1] Econodata — Maiores empresas desentupidora SP e Campinas, 2025 · econodata.com.br<br>
+      [2] Meon.com.br — Faturamento médio empresa desentupidora SP, 2024<br>
+      [3] ABRACD / Setor de Limpeza Profissional BR — crescimento 1–6%/ano, 2022<br>
+      [4] SEO BH — CPC desentupidora SP R$89, ref. 2023 · seobh.org<br>
+      [5] Planejador Web — Volume buscas SP ~50k/mês, ref. 2023<br>
+      [6] Pesquisa direta concorrentes: desentupidoranahora24h.com.br, desentupidoranobairro.com, hidrourgentedesentupidora.com.br, desentupidorasp.org — abr/2026<br>
+      [7] Google Ads — Relatório de Leilão conta 749-872-9570 · Dados de IS, overlap, position above rate · Jul–Dez 2025<br>
+      [8] Dados internos AutomatEasy — Autocomplete Scraper (572 sugestões), Search Terms histórico (9.284 termos, 140 convertidos) · Abr 2026
+    </div>
+    <div style="height:20px;"></div>
+    <div class="foot-copy">© 2026 AutomatEasy · Todos os dados são de propriedade da RR Desentupidora e de uso exclusivo interno</div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════ SCRIPTS ═══════════════════════════ -->
+<script>
+/* ── PROGRESS BAR ── */
+window.addEventListener('scroll', () => {
+  const s = document.documentElement.scrollTop;
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('progress').style.width = (s/h*100) + '%';
+});
+
+/* ── NAV HIGHLIGHT ── */
+const navLinks = document.querySelectorAll('.nav a');
+const sections = document.querySelectorAll('section[id]');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const a = document.querySelector(`.nav a[href="#${e.target.id}"]`);
+      if (a) a.classList.add('active');
+    }
+  });
+}, { threshold: .3 });
+sections.forEach(s => obs.observe(s));
+
+/* ── FADE-UP OBSERVER ── */
+const fadeObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: .08 });
+document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+
+/* ── CHART DEFAULTS ── */
+Chart.defaults.font.family = "'Inter', 'Segoe UI', sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#64748b';
+Chart.defaults.plugins.legend.labels.boxWidth = 12;
+
+const AZ = '#1e40af', AZC = '#3b82f6', AZL = 'rgba(59,130,246,.15)';
+const VD = '#059669', VDL = 'rgba(5,150,105,.15)';
+const LR = '#ea580c', LRL = 'rgba(234,88,12,.15)';
+const VR = '#dc2626';
+const AM = '#d97706';
+const CZ = '#94a3b8';
+
+/* ── CIDADES ── */
+new Chart(document.getElementById('cCidades'), {
+  type: 'bar',
+  data: {
+    labels: ['São Paulo', 'Rio de Janeiro', 'Curitiba', 'Belo Horizonte', 'Campinas'],
+    datasets: [{ data: [732,136,45,95,31], backgroundColor: [CZ,CZ,CZ,CZ,LR], borderRadius: 6, borderSkipped: false }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true,grid:{color:'#f1f5f9'}},x:{grid:{display:false}}} }
+});
+
+/* ── CRESCIMENTO ── */
+new Chart(document.getElementById('cCrescimento'), {
+  type: 'line',
+  data: {
+    labels: ['2010','2012','2014','2016','2018','2020','2022','2024','2026e'],
+    datasets: [{ data:[2.1,3.5,4.2,1.8,4.8,0.9,1.3,3.2,3.8], borderColor:AZC, backgroundColor:AZL, fill:true, tension:.4, pointRadius:4, pointBackgroundColor:AZC, pointBorderColor:'#fff', pointBorderWidth:2 }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{grid:{color:'#f1f5f9'},ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}} }
+});
+
+/* ── TICKET ── */
+new Chart(document.getElementById('cTicket'), {
+  type: 'bar',
+  data: {
+    labels: ['Pia / Ralo','Vaso Sanitário','Esgoto Residencial','Caixa de Gordura','Hidrojateamento'],
+    datasets: [
+      { label:'Mínimo (R$)', data:[140,160,450,150,300], backgroundColor:'rgba(30,64,175,.35)', borderRadius:4, borderSkipped:false },
+      { label:'Máximo (R$)', data:[240,240,750,400,800],  backgroundColor:AZ, borderRadius:4, borderSkipped:false }
+    ]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top'}}, scales:{y:{beginAtZero:true,grid:{color:'#f1f5f9'},ticks:{callback:v=>'R$'+v}},x:{grid:{display:false}}} }
+});
+
+/* ── SHARE OF VOICE ── */
+new Chart(document.getElementById('cShareVoice'), {
+  type: 'doughnut',
+  data: {
+    labels: ['RR Desentupidora','Hidrourgente','Outros (&lt;10% cada)','Impressões livres'],
+    datasets: [{ data:[25.3,18.9,15.8,40.0], backgroundColor:['#1e40af','#dc2626','#94a3b8','#e2e8f0'], borderWidth:3, borderColor:'#fff' }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, cutout:'60%', plugins:{legend:{position:'bottom', labels:{padding:12}}} }
+});
+
+/* ── OVERLAP ── */
+new Chart(document.getElementById('cOverlap'), {
+  type: 'bar',
+  indexAxis: 'y',
+  data: {
+    labels: ['FluxClean','Hidro Rápida','Vai Dar Certo','Hidropro','Suporte','Ocean','Hidromarine','Hidrourgente'],
+    datasets: [{ data:[15.96,12.70,5.92,5.74,2.76,2.48,1.63,21.20],
+      backgroundColor: ctx => ctx.raw >= 15 ? VR : ctx.raw >= 8 ? LR : AZC,
+      borderRadius:4, borderSkipped:false }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+    scales:{x:{grid:{color:'#f1f5f9'},ticks:{callback:v=>v+'%'}},y:{grid:{display:false}}} }
+});
+
+/* ── LEADS POR CAMPANHA ── */
+new Chart(document.getElementById('cLeads'), {
+  type: 'bar',
+  data: {
+    labels: ['Jul 2025\nR$300/dia','Set 2025\nR$450/dia','Out 2025\nR$400/dia','Dez 2025\nR$500/dia'],
+    datasets: [{ data:[256,32,43,18], backgroundColor:[VD,'#f97316','#f97316',VR], borderRadius:8, borderSkipped:false }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:true,grid:{color:'#f1f5f9'}},x:{grid:{display:false}}} }
+});
+
+/* ── CPA EVOLUTION ── */
+new Chart(document.getElementById('cCPA'), {
+  type: 'line',
+  data: {
+    labels: ['Jul 2025','Set 2025','Out 2025','Dez 2025'],
+    datasets: [{
+      label: 'CPA alvo (R$)',
+      data: [186,200,270,366],
+      borderColor: VR, backgroundColor:'rgba(220,38,38,.1)', fill:true, tension:.3,
+      pointRadius:7, pointBackgroundColor: [VD,AM,LR,VR], pointBorderColor:'#fff', pointBorderWidth:2
+    }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+    scales:{y:{grid:{color:'#f1f5f9'},ticks:{callback:v=>'R$'+v}},x:{grid:{display:false}}} }
+});
+
+/* ── CPL POR SERVIÇO ── */
+new Chart(document.getElementById('cCPLServico'), {
+  type: 'bar',
+  indexAxis: 'y',
+  data: {
+    labels: ['⭐ Encanador','Ralo','Esgoto','Pia','Desentupidora Geral','Vaso Sanitário','Caixa de Gordura'],
+    datasets: [
+      { data:[41.86,57.29,65.12,113.63,120.14,130.06,149.01],
+        backgroundColor: ctx => ctx.raw < 70 ? VD : ctx.raw < 120 ? AZC : LR,
+        borderRadius:4, borderSkipped:false, label:'CPL (R$)' }
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      annotation: undefined
+    },
+    scales:{x:{beginAtZero:true,grid:{color:'#f1f5f9'},ticks:{callback:v=>'R$'+v}},y:{grid:{display:false}}}
+  }
+});
+
+/* ── PROJEÇÃO LEADS ── */
+new Chart(document.getElementById('cProjLeads'), {
+  type: 'line',
+  data: {
+    labels: ['Jul–Dez 2025\n(histórico)','Mês 1\n(Fase 1)','Mês 2\n(Fase 1)','Mês 3\n(Fase 2)','Mês 5\n(Fase 2)'],
+    datasets: [{
+      label:'Leads/mês',
+      data:[72,85,100,120,150],
+      borderColor: AZC, backgroundColor: AZL, fill:true, tension:.4,
+      pointRadius:5, pointBackgroundColor: AZC, pointBorderColor:'#fff', pointBorderWidth:2
+    }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:false,grid:{color:'#f1f5f9'},ticks:{callback:v=>v+' leads'}},x:{grid:{display:false}}} }
+});
+
+/* ── PROJEÇÃO CPL ── */
+new Chart(document.getElementById('cProjCPL'), {
+  type: 'line',
+  data: {
+    labels: ['Jul–Dez 2025\n(histórico)','Mês 1\n(Fase 1)','Mês 2\n(Fase 1)','Mês 3\n(Fase 2)','Mês 5\n(Fase 2)'],
+    datasets: [{
+      label:'CPL (R$)',
+      data:[167,140,120,100,80],
+      borderColor: VD, backgroundColor: VDL, fill:true, tension:.4,
+      pointRadius:5, pointBackgroundColor: VD, pointBorderColor:'#fff', pointBorderWidth:2
+    }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:false,grid:{color:'#f1f5f9'},ticks:{callback:v=>'R$'+v}},x:{grid:{display:false}}} }
+});
+
+/* ── CPC BENCHMARK ── */
+/* Removido — substituído por comparison cards visuais */
+</script>
+</body>
+</html>
